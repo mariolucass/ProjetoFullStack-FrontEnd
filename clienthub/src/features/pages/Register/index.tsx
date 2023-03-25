@@ -1,13 +1,13 @@
 import * as components from "../../../components";
 import * as styled from "./styles";
-import * as layouts from "../../layouts";
 import * as animations from "../../libs/Framer/animations";
 import { UseAuthContext } from "../../../context";
 import { useForm } from "react-hook-form";
 import img from "../../../assets/images/return.svg";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { IRegister } from "../../interfaces/auth";
+import { ICustomerRegister } from "../../interfaces";
 import { Link } from "react-router-dom";
+import { schemaRegister } from "../../schemas";
 
 export const RegisterPage = () => {
   const { handleRegister } = UseAuthContext();
@@ -15,8 +15,8 @@ export const RegisterPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IRegister>({
-    // resolver: zodResolver(FormSchemaLogin),
+  } = useForm<ICustomerRegister>({
+    resolver: zodResolver(schemaRegister),
   });
 
   return (
@@ -79,7 +79,7 @@ export const RegisterPage = () => {
             type="text"
             placeholder="Confirme sua senha aqui"
             register={register}
-            error={errors.confirm_password}
+            error={errors.confirmPassword}
           />
           <styled.DivButtons>
             <components.Button type="submit"> Registre-se </components.Button>

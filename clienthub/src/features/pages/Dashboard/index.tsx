@@ -1,4 +1,4 @@
-import { Tabs } from "@mui/material";
+import { Modal, Slide, Tabs } from "@mui/material";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
@@ -19,15 +19,11 @@ export const Dashboard = () => {
     setValue(newValue);
   };
 
-  function TabPanel(props: TabPanelProps) {
-    const { element, value, index } = props;
-
-    return (
-      <styled.DivStyled role="tabpanel">
-        {value === index && element}
-      </styled.DivStyled>
-    );
-  }
+  const TabPanel = ({ element, value, index }: TabPanelProps) => (
+    <styled.DivStyled role="tabpanel">
+      {value === index && element}
+    </styled.DivStyled>
+  );
 
   return (
     <>
@@ -47,7 +43,6 @@ export const Dashboard = () => {
         <TabPanel value={value} index={2} element={<layouts.UpdateContact />} />
         <TabPanel value={value} index={3} element={<layouts.DeleteContact />} />
       </styled.MainStyled>
-      <layouts.Footer />
     </>
   );
 };

@@ -23,9 +23,16 @@ export const MainStyled = styled(motion.main)`
 `;
 
 export const DivStyled = styled(motion.div)`
-  width: 100%;
+  width: 93.5%;
 
   h1 {
     text-align: center;
+    color: var(--secondary-color);
+
+    text-shadow: horizontal-offset vertical-offset blur color;
+
+    text-shadow: 1px 4px 3px rgba(0, 0, 0, 0.3);
   }
 `;
+
+export const DivContainer = styled(motion.div)``;

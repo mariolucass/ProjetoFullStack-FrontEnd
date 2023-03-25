@@ -1,12 +1,6 @@
-export interface IRegister {
-  name: string;
-  phone: string;
-  email: string;
-  password: string;
-  confirm_password: string;
-}
+import z from "zod";
+import * as schemas from "./../schemas";
 
-export interface ILogin {
-  email: string;
-  password: string;
-}
+export type ICustomerLogin = z.infer<typeof schemas.schemaLogin>;
+
+export type ICustomerRegister = z.infer<typeof schemas.schemaRegister>;

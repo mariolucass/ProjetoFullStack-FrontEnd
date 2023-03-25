@@ -32,20 +32,20 @@ export const Header = () => {
   );
 
   const TabsMenu = () => (
-    <Tabs
-      orientation="vertical"
-      value={value}
-      onChange={handleChange}
-      sx={{ width: 500 }}
-    >
-      <Tab icon={<CgProfile />} label="Profile" />
-      <Tab icon={<CgLogOut />} label="Logout" />
-    </Tabs>
+    <styled.DivTabMenus>
+      <Tab icon={<CgProfile />} label="Profile" className="TabMenu" />
+      <Tab icon={<CgLogOut />} label="Logout" className="TabMenu" />
+    </styled.DivTabMenus>
   );
 
   return (
     <styled.HeaderStyled>
-      <Avatar />
+      {windowWidth < 1440 ? (
+        <Avatar />
+      ) : (
+        <Avatar sx={{ width: 216, height: 216 }} />
+      )}
+
       {windowWidth < 1440 ? <MenuBurger /> : <TabsMenu />}
     </styled.HeaderStyled>
   );

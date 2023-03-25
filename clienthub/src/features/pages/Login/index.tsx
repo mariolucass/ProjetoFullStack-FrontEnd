@@ -1,11 +1,12 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as components from "../../../components";
-import { AuthContext, UseAuthContext } from "../../../context/AuthContext";
-import { ILogin } from "../../interfaces/auth";
+import { UseAuthContext } from "../../../context/AuthContext";
+import { ICustomerLogin } from "../../interfaces/auth";
 import * as styled from "./styles";
 import { Link } from "react-router-dom";
 import * as animations from "../../libs/Framer/animations";
+import { schemaLogin } from "../../schemas";
 
 export const LoginPage = () => {
   const { handleLogin } = UseAuthContext();
@@ -13,8 +14,8 @@ export const LoginPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ILogin>({
-    // resolver: zodResolver(FormSchemaLogin),
+  } = useForm<ICustomerLogin>({
+    resolver: zodResolver(schemaLogin),
   });
 
   return (
