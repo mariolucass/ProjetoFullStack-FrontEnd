@@ -1,9 +1,9 @@
+import * as styled from "./styles";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import * as schemas from "../../../schemas";
 import * as components from "../../../../components";
 import { IContactRequest } from "../../../interfaces";
-import * as styled from "./styles";
-import * as schemas from "../../../schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { UseContactsContext } from "../../../../context";
 
 export const CreateContact = () => {
@@ -14,11 +14,12 @@ export const CreateContact = () => {
   } = useForm<IContactRequest>({
     resolver: zodResolver(schemas.contactCreate),
   });
+
   const { postContact } = UseContactsContext();
 
   return (
     <styled.DivStyled>
-      <h1>Crie aqui um contato</h1>
+      <h1>Crie aqui um contato.</h1>
 
       <styled.DivForm>
         <form onSubmit={handleSubmit(postContact)}>

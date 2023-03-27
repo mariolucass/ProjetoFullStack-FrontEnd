@@ -2,17 +2,18 @@ import axios, { AxiosError } from "axios";
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { api, apiAuthenticated } from "../../features/database/axios";
+import { apiAuthenticated } from "../../features/database/axios";
 
-import * as interfaces from "../../features/interfaces";
+import {
+  IChildren,
+  IContactRequest,
+  IContactUpdate,
+} from "../../features/interfaces";
 
 export interface ContactsContext {
-  postContact: (data: interfaces.IContactRequest) => Promise<void>;
+  postContact: (data: IContactRequest) => Promise<void>;
 
-  patchContact: (
-    contactId: string,
-    data: interfaces.IContactUpdate
-  ) => Promise<void>;
+  patchContact: (contactId: string, data: IContactUpdate) => Promise<void>;
 
   deleteContact: (contactId: string) => Promise<void>;
 }
@@ -21,12 +22,10 @@ export const ContactsContext = createContext<ContactsContext>(
   {} as ContactsContext
 );
 
-interface IProps extends interfaces.IChildren {}
-
-export const ContactsProvider = ({ children }: IProps) => {
+export const ContactsProvider = ({ children }: IChildren) => {
   const navigate = useNavigate();
 
-  const postContact = async (data: interfaces.IContactRequest) => {
+  const postContact = async (data: IContactRequest) => {
     try {
       await apiAuthenticated.post("contacts", data);
       toast.success("O contato foi criado com sucesso!");
@@ -39,10 +38,7 @@ export const ContactsProvider = ({ children }: IProps) => {
     }
   };
 
-  const patchContact = async (
-    contactId: string,
-    data: interfaces.IContactUpdate
-  ) => {
+  const patchContact = async (contactId: string, data: IContactUpdate) => {
     try {
       apiAuthenticated.patch(`contacts/${contactId}`, data);
       toast.success("O contato foi atualizado com sucesso!");

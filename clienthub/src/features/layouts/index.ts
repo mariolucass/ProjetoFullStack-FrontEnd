@@ -1,5 +1,3 @@
-export { Form } from "./Form";
-export { Footer } from "./Footer";
 export { Header } from "./Header";
 export { Profile } from "./Dashboard/Profile";
 

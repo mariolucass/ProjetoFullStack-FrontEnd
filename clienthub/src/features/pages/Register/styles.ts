@@ -32,8 +32,6 @@ export const FormStyled = styled(motion.form)`
   position: absolute;
   bottom: 0px;
 
-  border-right: 0.5em solid var(--secondary-color);
-
   display: flex;
   flex-direction: column;
 
@@ -54,7 +52,6 @@ export const FormStyled = styled(motion.form)`
     top: 0px;
     border-radius: 0px;
     border-right: 0px;
-    border-left: 0.5em solid var(--secondary-color);
 
     box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px,
       rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;

@@ -15,15 +15,10 @@ export const DivStyled = styled(motion.div)`
   h1 {
     text-align: center;
     color: var(--secondary-color);
-
-    text-shadow: horizontal-offset vertical-offset blur color;
-
-    text-shadow: 1px 4px 3px rgba(0, 0, 0, 0.3);
   }
 
   @media (min-width: 1440px) {
     width: 100%;
-    min-height: 94vh;
     margin-top: 59px;
   }
 `;
@@ -41,7 +36,7 @@ export const DivForm = styled(motion.div)`
 
     gap: 2.4rem;
     padding: 1rem;
-    border-radius: 2em;
+    border-radius: 0.5em;
     padding-top: 4em;
 
     background-color: var(--white-color);

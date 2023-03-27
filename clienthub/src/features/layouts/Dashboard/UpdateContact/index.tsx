@@ -20,7 +20,6 @@ export const UpdateContact = () => {
     (async () => {
       const response = await apiAuthenticated.get("/customers/contacts");
       const data: IContactReturn[] = response.data;
-      console.log(data);
 
       setContactsInRender(data.filter((contact) => contact.isActive));
     })();
@@ -57,7 +56,7 @@ export const UpdateContact = () => {
 
   return (
     <styled.DivStyled>
-      <h1>Atualize aqui um contato especifico</h1>
+      <h1>Atualize aqui um contato.</h1>
 
       <styled.DivForm>
         <form onSubmit={handleSubmit(handleUpdate)}>

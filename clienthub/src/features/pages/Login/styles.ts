@@ -24,7 +24,6 @@ export const FormStyled = styled(motion.form)`
   width: 100%;
   position: absolute;
   bottom: 0px;
-  border-right: 0.5em solid var(--secondary-color);
 
   display: flex;
   flex-direction: column;

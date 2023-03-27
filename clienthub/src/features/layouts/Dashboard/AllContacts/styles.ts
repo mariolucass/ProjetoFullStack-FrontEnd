@@ -9,10 +9,6 @@ export const DivStyled = styled(motion.div)`
   gap: 4em;
 
   align-items: center;
-
-  @media (min-width: 1440px) {
-    min-height: 94vh;
-  }
 `;
 
 export const ListStyled = styled(motion.ul)`
@@ -50,29 +46,10 @@ export const DivList = styled(motion.div)`
   background-color: var(--white-color);
   box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
     rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-`;
 
-export const ContactTab = styled(motion.li)`
-  width: 20%;
-  min-height: 300px;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--secondary-color);
-  border-radius: 0.4em;
-  justify-content: center;
-  align-items: center;
-  gap: 1em;
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
-    rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-  border-radius: 2em;
-
-  div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
+  .Card {
     h4 {
-      color: var(--tertiary-color);
+      color: var(--secondary-color);
     }
   }
 `;

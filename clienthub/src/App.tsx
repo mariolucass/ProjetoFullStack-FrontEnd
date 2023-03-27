@@ -1,22 +1,21 @@
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
-import { RoutesMain } from "../src/features/routes";
-import { GlobalStyle } from "./features/styles/globalStyle";
-import { AllContexts } from "./features/layouts/Contexts";
 import { ThemeProvider } from "@mui/material";
+import { ToastContainer } from "react-toastify";
 import { theme } from "./features/libs/Mui/theme";
+import { RoutesMain } from "../src/features/routes";
+import { AllContexts } from "./features/layouts/Contexts";
+import { GlobalStyle } from "./features/styles/globalStyle";
 
-export const App = () => {
-  return (
-    <>
-      <ThemeProvider theme={theme}>
-        <AllContexts>
-          <RoutesMain />
-        </AllContexts>
-      </ThemeProvider>
+import "react-toastify/dist/ReactToastify.css";
 
-      <GlobalStyle />
-      <ToastContainer limit={3} autoClose={2000} />
-    </>
-  );
-};
+export const App = () => (
+  <>
+    <ThemeProvider theme={theme}>
+      <AllContexts>
+        <RoutesMain />
+      </AllContexts>
+    </ThemeProvider>
+
+    <GlobalStyle />
+    <ToastContainer limit={3} autoClose={2000} />
+  </>
+);

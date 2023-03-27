@@ -8,8 +8,8 @@ export const GlobalStyle = createGlobalStyle`
 
 
     --secondary-color: #296073;
-    --secondary95-color: #29607395;
-
+    --secondary95-color: #215365;
+  
 
     --tertiary-color: #3596B5;
     
@@ -52,6 +52,7 @@ body {
     height: 100vh;
  
     overflow-x:hidden;
+    background-color: var(--grey-color);
 
     font-family: var(--font-base);
 

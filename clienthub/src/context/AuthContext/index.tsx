@@ -1,25 +1,24 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api, apiAuthenticated } from "../../features/database/axios";
-import * as interfaces from "../../features/interfaces";
+import {
+  ICustomerLogin,
+  ICustomerRegister,
+  ICustomerReturn,
+  ICustomerUpdate,
+} from "../../features/interfaces";
 import { IChildren } from "../../features/interfaces/children";
 import { toast } from "react-toastify";
 
 export interface AuthContext {
-  handleLogin: (data: interfaces.ICustomerLogin) => Promise<void>;
-  handleRegister: (data: interfaces.ICustomerRegister) => Promise<void>;
-  updateCustomer: (
-    id: string,
-    data: interfaces.ICustomerUpdate
-  ) => Promise<void>;
-  deleteCustomer: (id: string) => Promise<void>;
-
+  handleLogin: (data: ICustomerLogin) => Promise<void>;
+  handleRegister: (data: ICustomerRegister) => Promise<void>;
+  updateCustomer: (data: ICustomerUpdate) => Promise<void>;
+  deleteCustomer: () => Promise<void>;
   dashboard: boolean;
   setDashboard: React.Dispatch<React.SetStateAction<boolean>>;
-  contacts: interfaces.IContactReturn[];
-  setContacts: React.Dispatch<
-    React.SetStateAction<interfaces.IContactReturn[]>
-  >;
+  customer: ICustomerReturn;
+  setCustomer: React.Dispatch<React.SetStateAction<ICustomerReturn>>;
 }
 
 export const AuthContext = createContext<AuthContext>({} as AuthContext);
@@ -28,11 +27,10 @@ interface IProps extends IChildren {}
 
 export const AuthProvider = ({ children }: IProps) => {
   const navigate = useNavigate();
-
-  const [dashboard, setDashboard] = useState(true);
-  const [contacts, setContacts] = useState<interfaces.IContactReturn[]>(
-    [] as interfaces.IContactReturn[]
+  const [customer, setCustomer] = useState<ICustomerReturn>(
+    {} as ICustomerReturn
   );
+  const [dashboard, setDashboard] = useState(true);
 
   useEffect(() => {
     const autoLogin = async () => {
@@ -40,10 +38,9 @@ export const AuthProvider = ({ children }: IProps) => {
 
       if (token) {
         try {
-          const response = await apiAuthenticated.get("/customers/contacts");
-          const data: interfaces.IContactReturn[] = response.data;
-
-          setContacts(data.filter((contact) => contact.isActive));
+          const response = await apiAuthenticated.get("/customers/profile");
+          const data: ICustomerReturn = response.data;
+          setCustomer(data);
 
           navigate("/dashboard");
         } catch (error) {
@@ -60,23 +57,21 @@ export const AuthProvider = ({ children }: IProps) => {
     autoLogin();
   }, []);
 
-  const handleLogin = async (data: interfaces.ICustomerLogin) => {
+  const handleLogin = async (data: ICustomerLogin) => {
     try {
       const response: any = await api.post("/auth/login", data);
 
       localStorage.setItem("tokenContactsApp", response.data.token);
-      console.log(response);
 
       toast.success("Login realizado com sucesso.");
 
       navigate("/dashboard");
     } catch (error) {
-      console.log(error);
       toast.error("Ops! Algo deu errado");
     }
   };
 
-  const handleRegister = async (data: interfaces.ICustomerRegister) => {
+  const handleRegister = async (data: ICustomerRegister) => {
     try {
       await api.post("/auth/register", data);
 
@@ -84,17 +79,18 @@ export const AuthProvider = ({ children }: IProps) => {
 
       navigate("/login");
     } catch (error) {
-      console.log(error);
       toast.error("Ops! Algo deu errado");
     }
   };
 
-  const updateCustomer = async (
-    id: string,
-    data: interfaces.ICustomerUpdate
-  ) => {
+  const updateCustomer = async (data: ICustomerUpdate) => {
     try {
-      await apiAuthenticated.patch(`/customer/${id}`, data);
+      const response = await apiAuthenticated.patch(
+        `/customers/${customer.id}`,
+        data
+      );
+
+      setCustomer(response.data);
 
       toast.success("Usuário atualizado com sucesso.");
     } catch (error) {
@@ -102,9 +98,9 @@ export const AuthProvider = ({ children }: IProps) => {
     }
   };
 
-  const deleteCustomer = async (id: string) => {
+  const deleteCustomer = async () => {
     try {
-      await apiAuthenticated.delete(`/customer/${id}`);
+      await apiAuthenticated.delete(`/customers/${customer.id}`);
 
       toast.success("Usuário atualizado com sucesso.");
     } catch (error) {
@@ -119,8 +115,8 @@ export const AuthProvider = ({ children }: IProps) => {
         handleRegister,
         updateCustomer,
         deleteCustomer,
-        contacts,
-        setContacts,
+        customer,
+        setCustomer,
         dashboard,
         setDashboard,
       }}

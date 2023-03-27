@@ -32,6 +32,7 @@ export const animateHiddenLeave = {
   scale: 0.3,
   transition: transitions.transitionAccordion,
 };
+
 export const animateShowingLeave = {
   transform: "translateX(0px)",
   opacity: 1,
@@ -43,7 +44,8 @@ export const animateDisplayNone = {
   display: "none",
 };
 
-export const animate360 = { rotate: 360 };
-export const animate180 = { rotate: 180 };
-export const animate90 = { rotate: 90 };
-export const animate45 = { rotate: 45 };
+export const animateTap = { scale: 0.9 };
+export const animateHover = {
+  scale: 0.97,
+  transition: { duration: 0.3 },
+};

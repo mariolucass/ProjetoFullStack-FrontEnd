@@ -1,3 +1,3 @@
 export { schemaLogin, schemaRegister } from "./auth";
-export { customerCreate, customerUpdate } from "./customers";
-export { contactCreate, contactUpdate } from "./contacts";
+export { customerCreate, customerUpdate, customerReturn } from "./customers";
+export { contactCreate, contactUpdate, contactReturn } from "./contacts";

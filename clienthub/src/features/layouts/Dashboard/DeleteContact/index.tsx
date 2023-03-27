@@ -8,9 +8,12 @@ import { UseContactsContext } from "../../../../context";
 import { toast } from "react-toastify";
 
 export const DeleteContact = () => {
+  const [confirmModal, setConfirmModal] = useState(false);
+  const [idToDelete, setIdToDelete] = useState("");
   const [contactsInRender, setContactsInRender] = useState<IContactReturn[]>(
     []
   );
+
   useEffect(() => {
     (async () => {
       const response = await apiAuthenticated.get("/customers/contacts");
@@ -19,9 +22,6 @@ export const DeleteContact = () => {
       setContactsInRender(data.filter((contact) => contact.isActive));
     })();
   }, []);
-
-  const [confirmModal, setConfirmModal] = useState(false);
-  const [idToDelete, setIdToDelete] = useState("");
 
   const { deleteContact } = UseContactsContext();
 
@@ -33,21 +33,16 @@ export const DeleteContact = () => {
 
     setConfirmModal(true);
   };
-
   const handleDelete = () => deleteContact(idToDelete);
 
   return (
     <styled.DivStyled>
-      <h1>Delete aqui um contato especifico</h1>
+      <h1>Delete aqui um contato.</h1>
 
       <styled.DivContainer>
         <SelectComponent list={contactsInRender} setState={setIdToDelete} />
 
-        <components.Button
-          type={"button"}
-          variant={"tertiary"}
-          onClick={handleModalDelete}
-        >
+        <components.Button type={"button"} onClick={handleModalDelete}>
           Deletar
         </components.Button>
       </styled.DivContainer>

@@ -12,16 +12,11 @@ export const transitionSpring = {
   },
 };
 
-export const transitionLetter = {
-  duration: 1.5,
-  type: "spring",
-  ease: [0.2, 0.65, 0.3, 0.9],
-};
-
-export const transitionText = {
-  delay: 1,
-  type: "spring",
-  staggerChildren: 0.08,
+export const transitionSpring1 = {
+  duration: 1,
+  ease: "easeInOut",
+  times: [0, 0.2, 0.5, 0.8, 1],
+  repeatDelay: 1,
 };
 
 export const transitionAccordion = {
@@ -30,11 +25,4 @@ export const transitionAccordion = {
   mass: 0.75,
   stiffness: 100,
   delay: 0.2,
-};
-
-export const transitionSpring1 = {
-  duration: 1,
-  ease: "easeInOut",
-  times: [0, 0.2, 0.5, 0.8, 1],
-  repeatDelay: 1,
 };

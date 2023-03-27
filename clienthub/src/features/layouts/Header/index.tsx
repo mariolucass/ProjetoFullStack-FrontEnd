@@ -10,10 +10,16 @@ import { UseAuthContext } from "../../../context";
 
 import menuIcon from "../../../assets/images/menu.svg";
 import { useNavigate } from "react-router-dom";
+import {
+  animateHover,
+  animateShowingLeave,
+  animateTap,
+} from "../../libs/Framer/animations";
+import { transitionAccordion } from "../../libs/Framer/transitions";
 
 export const Header = () => {
   const navigate = useNavigate();
-  const { setDashboard, dashboard } = UseAuthContext();
+  const { setDashboard, dashboard, customer } = UseAuthContext();
 
   const [windowWidth, setWindowWidth] = useState(0);
   const [confirmModal, setConfirmModal] = useState(false);
@@ -47,43 +53,25 @@ export const Header = () => {
 
   const TabsMenu = () => (
     <styled.DivTabMenus>
-      <motion.div
-        whileHover={{
-          scale: 0.97,
-          transition: { duration: 0.3 },
-        }}
-        whileTap={{ scale: 0.9 }}
-      >
+      <motion.div whileHover={animateHover} whileTap={animateTap}>
         <Tab
-          className={dashboard ? "TabMenu active" : "TabMenu"}
-          onClick={handleDashboardPage}
-          icon={<MdDashboard />}
           label={"Dashboard"}
+          icon={<MdDashboard />}
+          onClick={handleDashboardPage}
+          className={dashboard ? "TabMenu active" : "TabMenu"}
         />
       </motion.div>
 
-      <motion.div
-        whileHover={{
-          scale: 0.97,
-          transition: { duration: 0.3 },
-        }}
-        whileTap={{ scale: 0.9 }}
-      >
+      <motion.div whileHover={animateHover} whileTap={animateTap}>
         <Tab
-          className={dashboard ? "TabMenu" : "TabMenu active"}
-          onClick={handleProfilePage}
-          icon={<CgProfile />}
           label={"Profile"}
+          icon={<CgProfile />}
+          onClick={handleProfilePage}
+          className={dashboard ? "TabMenu" : "TabMenu active"}
         />
       </motion.div>
 
-      <motion.div
-        whileHover={{
-          scale: 0.97,
-          transition: { duration: 0.3 },
-        }}
-        whileTap={{ scale: 0.9 }}
-      >
+      <motion.div whileHover={animateHover} whileTap={animateTap}>
         <Tab
           label="Logout"
           icon={<CgLogOut />}
@@ -95,24 +83,21 @@ export const Header = () => {
   );
 
   return (
-    <styled.HeaderStyled>
-      {windowWidth < 1440 ? (
-        <>
-          <styled.DivAvatar>
-            <Avatar />
-            <span>Mário Lucas</span>
-          </styled.DivAvatar>
-
-          <MenuBurger />
-        </>
-      ) : (
+    <styled.HeaderStyled animate={animateShowingLeave}>
+      {windowWidth > 1440 ? (
         <>
           <styled.DivAvatar>
             <Avatar sx={{ width: 216, height: 216 }} />
-            <span>Mário Lucas</span>
+            <span>Olá, {customer.name}</span>
           </styled.DivAvatar>
 
           <TabsMenu />
+        </>
+      ) : (
+        <>
+          <Avatar />
+
+          <MenuBurger />
         </>
       )}
 

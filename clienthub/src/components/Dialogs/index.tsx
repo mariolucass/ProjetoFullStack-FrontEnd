@@ -1,6 +1,5 @@
-import { Dialog, DialogActions, DialogTitle } from "@mui/material";
-import { ZodFunction } from "zod";
 import { Button } from "../Buttons";
+import { Dialog, DialogActions, DialogTitle } from "@mui/material";
 
 interface IProps {
   state: boolean;
@@ -27,12 +26,16 @@ export const DialogComponent = ({
       <DialogTitle>{text}</DialogTitle>
 
       <DialogActions>
-        <Button type="button" onClick={confirmAndCloseModal} autoFocus>
-          Sim
+        <Button type="button" variant="tertiary" onClick={handleCloseModal}>
+          Não
         </Button>
 
-        <Button type="button" onClick={handleCloseModal}>
-          Não
+        <Button
+          type="button"
+          variant="secondary"
+          onClick={confirmAndCloseModal}
+        >
+          Sim
         </Button>
       </DialogActions>
     </Dialog>

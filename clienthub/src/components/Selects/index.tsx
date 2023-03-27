@@ -23,15 +23,10 @@ export const SelectComponent = ({ list, setState }: IProps) => {
   ));
 
   return (
-    <FormControl>
-      <InputLabel>Contato</InputLabel>
+    <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+      <InputLabel>CONTATO</InputLabel>
 
-      <Select
-        label="Age"
-        onChange={handleChange}
-        sx={{ width: 250 }}
-        defaultValue=""
-      >
+      <Select onChange={handleChange} sx={{ width: 250 }} defaultValue="">
         {renderMenuItems}
       </Select>
     </FormControl>

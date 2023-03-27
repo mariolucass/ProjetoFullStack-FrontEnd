@@ -11,10 +11,6 @@ export const DivStyled = styled(motion.div)`
   flex-direction: column;
 
   align-items: center;
-
-  @media (min-width: 1440px) {
-    min-height: 94vh;
-  }
 `;
 
 export const DivContainer = styled(motion.div)`
@@ -29,7 +25,7 @@ export const DivContainer = styled(motion.div)`
 
   gap: 2.4rem;
   padding: 1rem;
-  border-radius: 1em;
+  border-radius: 0.5em;
   padding-top: 4em;
 
   background-color: var(--white-color);

@@ -1,9 +1,8 @@
+import { useState } from "react";
+import { Box } from "@mui/system";
 import * as styled from "./styles";
 import * as layouts from "../../layouts";
 import { Tab, Tabs } from "@mui/material";
-import { Box } from "@mui/system";
-import { useState } from "react";
-
 interface TabPanelProps {
   element: React.ReactNode;
   index: number;
@@ -18,7 +17,12 @@ export const Dashboard = () => {
   };
 
   const TabPanel = ({ element, value, index }: TabPanelProps) => (
-    <styled.DivStyled role="tabpanel">
+    <styled.DivStyled
+      role="tabpanel"
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+    >
       {value === index && element}
     </styled.DivStyled>
   );

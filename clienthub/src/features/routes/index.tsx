@@ -1,7 +1,7 @@
-import { Navigate, Route, Routes } from "react-router-dom";
-import { MainPage } from "../pages/MainPage";
 import { LoginPage } from "../pages/Login";
+import { MainPage } from "../pages/MainPage";
 import { RegisterPage } from "../pages/Register";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 export const RoutesMain = () => (
   <Routes>

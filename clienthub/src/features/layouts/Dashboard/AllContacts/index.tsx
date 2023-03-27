@@ -1,8 +1,9 @@
-import { Skeleton } from "@mui/material";
-import { useEffect, useState } from "react";
-import { apiAuthenticated } from "../../../database/axios";
 import * as styled from "./styles";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { IContactReturn } from "../../../interfaces";
+import { apiAuthenticated } from "../../../database/axios";
+import { Card, CardContent, Skeleton } from "@mui/material";
 
 export const AllContacts = () => {
   const [contactsInRender, setContactsInRender] = useState<IContactReturn[]>(
@@ -19,22 +20,24 @@ export const AllContacts = () => {
   }, []);
 
   const renderContacts = contactsInRender.map((contact: any) => (
-    <styled.ContactTab key={contact.email}>
-      <div>
-        <h4>Nome:</h4>
-        <span>{contact.name}</span>
-      </div>
+    <Card sx={{ minWidth: 275 }} key={contact.email} className="Card">
+      <CardContent>
+        <motion.div>
+          <motion.h4>Nome:</motion.h4>
+          <motion.span>{contact.name}</motion.span>
+        </motion.div>
 
-      <div>
-        <h4>Email:</h4>
-        <span>{contact.email}</span>
-      </div>
+        <motion.div>
+          <motion.h4>Email:</motion.h4>
+          <motion.span>{contact.email}</motion.span>
+        </motion.div>
 
-      <div>
-        <h4>Telefone:</h4>
-        <span>{contact.phone}</span>
-      </div>
-    </styled.ContactTab>
+        <motion.div>
+          <motion.h4>Telefone:</motion.h4>
+          <motion.span>{contact.phone}</motion.span>
+        </motion.div>
+      </CardContent>
+    </Card>
   ));
 
   const RenderList = () => {
@@ -42,21 +45,21 @@ export const AllContacts = () => {
       <styled.ListStyled>{renderContacts}</styled.ListStyled>
     ) : (
       <styled.ListStyled>
-        <Skeleton variant="rounded" width={248} height={248} />
-        <Skeleton variant="rounded" width={248} height={248} />
-        <Skeleton variant="rounded" width={248} height={248} />
-        <Skeleton variant="rounded" width={248} height={248} />
-        <Skeleton variant="rounded" width={248} height={248} />
-        <Skeleton variant="rounded" width={248} height={248} />
-        <Skeleton variant="rounded" width={248} height={248} />
-        <Skeleton variant="rounded" width={248} height={248} />
+        <Skeleton variant="rounded" width={275} height={160} />
+        <Skeleton variant="rounded" width={275} height={160} />
+        <Skeleton variant="rounded" width={275} height={160} />
+        <Skeleton variant="rounded" width={275} height={160} />
+        <Skeleton variant="rounded" width={275} height={160} />
+        <Skeleton variant="rounded" width={275} height={160} />
+        <Skeleton variant="rounded" width={275} height={160} />
+        <Skeleton variant="rounded" width={275} height={160} />
       </styled.ListStyled>
     );
   };
 
   return (
     <styled.DivStyled>
-      <h1>Aqui estão todos os seus contatos</h1>
+      <h1>Aqui estão todos os seus contatos.</h1>
 
       <styled.DivList>
         <RenderList />

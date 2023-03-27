@@ -1,15 +1,15 @@
-import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
-import { TiUserDelete } from "react-icons/ti";
-import { BsFiletypePdf } from "react-icons/bs";
+import { useState } from "react";
 import * as styled from "./styles";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ICustomerUpdate } from "../../../interfaces";
 import { useForm } from "react-hook-form";
 import * as schemas from "../../../schemas";
+import { TiUserDelete } from "react-icons/ti";
+import { useNavigate } from "react-router-dom";
 import * as components from "../../../../components";
 import { UseAuthContext } from "../../../../context";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { ICustomerUpdate } from "../../../interfaces";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
+import { toast } from "react-toastify";
 
 export const Profile = () => {
   const navigate = useNavigate();
@@ -28,8 +28,7 @@ export const Profile = () => {
 
   const handleModalDelete = () => setConfirmDeleteModal(true);
   const handleDelete = () => {
-    const id = "";
-    deleteCustomer(id);
+    deleteCustomer();
 
     localStorage.removeItem("token");
     navigate("/login");
@@ -42,8 +41,11 @@ export const Profile = () => {
 
     const dataStrip = schemas.customerUpdate.parse(nonEmptyValues);
 
-    const id = "";
-    updateCustomer(id, dataStrip);
+    if (!Object.keys(dataStrip).length) {
+      toast.error("Selecione pelo menos um campo para atualizar");
+      return;
+    }
+    updateCustomer(dataStrip);
   };
 
   const SpeedDialProfile = () => (
@@ -57,7 +59,11 @@ export const Profile = () => {
   );
 
   return (
-    <styled.DivStyled>
+    <styled.DivStyled
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+    >
       <h1>Edite aqui seu perfil</h1>
 
       <styled.DivForm>

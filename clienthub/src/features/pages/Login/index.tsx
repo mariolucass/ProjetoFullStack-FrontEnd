@@ -1,12 +1,12 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as components from "../../../components";
-import { UseAuthContext } from "../../../context/AuthContext";
-import { ICustomerLogin } from "../../interfaces/auth";
 import * as styled from "./styles";
 import { Link } from "react-router-dom";
-import * as animations from "../../libs/Framer/animations";
+import { useForm } from "react-hook-form";
 import { schemaLogin } from "../../schemas";
+import * as components from "../../../components";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ICustomerLogin } from "../../interfaces/auth";
+import * as animations from "../../libs/Framer/animations";
+import { UseAuthContext } from "../../../context/AuthContext";
 
 export const LoginPage = () => {
   const { handleLogin } = UseAuthContext();
@@ -19,7 +19,11 @@ export const LoginPage = () => {
   });
 
   return (
-    <styled.MainStyled>
+    <styled.MainStyled
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <styled.FormStyled
         onSubmit={handleSubmit(handleLogin)}
         animate={animations.animateShowingLogin}
