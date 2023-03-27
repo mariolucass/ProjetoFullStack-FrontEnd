@@ -17,14 +17,21 @@ export const SelectComponent = ({ list, setState }: IProps) => {
   };
 
   const renderMenuItems = list.map((elem) => (
-    <MenuItem value={elem.id}>{elem.name}</MenuItem>
+    <MenuItem key={elem.id} value={elem.id}>
+      {elem.name}
+    </MenuItem>
   ));
 
   return (
     <FormControl>
       <InputLabel>Contato</InputLabel>
 
-      <Select label="Age" onChange={handleChange} sx={{ width: 250 }}>
+      <Select
+        label="Age"
+        onChange={handleChange}
+        sx={{ width: 250 }}
+        defaultValue=""
+      >
         {renderMenuItems}
       </Select>
     </FormControl>

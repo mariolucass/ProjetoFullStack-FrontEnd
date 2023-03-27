@@ -74,9 +74,9 @@ export const RegisterPage = () => {
           />
 
           <components.Input
-            name={"confirm_password"}
+            name={"confirmPassword"}
             label={"Confirme sua senha"}
-            type="text"
+            type="password"
             placeholder="Confirme sua senha aqui"
             register={register}
             error={errors.confirmPassword}

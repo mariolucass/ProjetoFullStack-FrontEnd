@@ -1,18 +1,16 @@
-import { customerReturn } from "./customers";
 import { z } from "zod";
 
 export const contactCreate = z.object({
-  name: z.string(),
-  email: z.string(),
-  phone: z.string(),
+  name: z.string().nonempty(),
+  email: z.string().nonempty().email(),
+  phone: z.string().nonempty(),
 });
 
-export const contactReturn = contactCreate.extend({
-  id: z.string(),
-  isActive: z.boolean(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
-  customer: customerReturn.omit({ contacts: true }),
-});
-
-export const contactUpdate = contactCreate.partial();
+export const contactUpdate = z
+  .object({
+    name: z.string().optional(),
+    email: z.string().optional(),
+    phone: z.string().optional(),
+  })
+  .partial()
+  .strip();

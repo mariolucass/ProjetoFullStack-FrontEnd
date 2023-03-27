@@ -51,3 +51,28 @@ export const DivList = styled(motion.div)`
   box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
     rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
 `;
+
+export const ContactTab = styled(motion.li)`
+  width: 20%;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--secondary-color);
+  border-radius: 0.4em;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+    rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+  border-radius: 2em;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h4 {
+      color: var(--tertiary-color);
+    }
+  }
+`;

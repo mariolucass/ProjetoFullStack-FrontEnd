@@ -1,31 +1,63 @@
 import * as styled from "./styles";
-import { useState } from "react";
-import { DialogDelete } from "./dialog";
-import { Button } from "../../../../components";
-import { UseAuthContext } from "../../../../context";
+import * as components from "../../../../components";
+import { useEffect, useState } from "react";
 import { SelectComponent } from "../../../../components/Selects";
+import { apiAuthenticated } from "../../../database/axios";
+import { IContactReturn } from "../../../interfaces";
+import { UseContactsContext } from "../../../../context";
+import { toast } from "react-toastify";
 
 export const DeleteContact = () => {
+  const [contactsInRender, setContactsInRender] = useState<IContactReturn[]>(
+    []
+  );
+  useEffect(() => {
+    (async () => {
+      const response = await apiAuthenticated.get("/customers/contacts");
+      const data: IContactReturn[] = response.data;
+
+      setContactsInRender(data.filter((contact) => contact.isActive));
+    })();
+  }, []);
+
   const [confirmModal, setConfirmModal] = useState(false);
   const [idToDelete, setIdToDelete] = useState("");
 
-  const { contacts } = UseAuthContext();
+  const { deleteContact } = UseContactsContext();
 
-  const handleOpenModal = () => setConfirmModal(true);
+  const handleModalDelete = () => {
+    if (idToDelete === "") {
+      toast.error("Selecione um usuário para deletar");
+      return;
+    }
+
+    setConfirmModal(true);
+  };
+
+  const handleDelete = () => deleteContact(idToDelete);
 
   return (
     <styled.DivStyled>
       <h1>Delete aqui um contato especifico</h1>
 
       <styled.DivContainer>
-        <SelectComponent list={contacts} setState={setIdToDelete} />
+        <SelectComponent list={contactsInRender} setState={setIdToDelete} />
 
-        <Button type={"button"} variant={"tertiary"} onClick={handleOpenModal}>
+        <components.Button
+          type={"button"}
+          variant={"tertiary"}
+          onClick={handleModalDelete}
+        >
           Deletar
-        </Button>
+        </components.Button>
       </styled.DivContainer>
 
-      <DialogDelete state={confirmModal} setState={setConfirmModal} />
+      <components.DialogComponent
+        state={confirmModal}
+        setState={setConfirmModal}
+        handleFunction={handleDelete}
+        text={"Deseja deletar o contato?"}
+      />
     </styled.DivStyled>
   );
 };

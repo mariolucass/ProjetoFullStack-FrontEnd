@@ -1,7 +1,8 @@
+import axios, { AxiosError } from "axios";
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { api } from "../../features/database/axios";
+import { api, apiAuthenticated } from "../../features/database/axios";
 
 import * as interfaces from "../../features/interfaces";
 
@@ -26,24 +27,45 @@ export const ContactsProvider = ({ children }: IProps) => {
   const navigate = useNavigate();
 
   const postContact = async (data: interfaces.IContactRequest) => {
-    const response = await api.post("contacts", data);
-
-    toast.success("O contato foi criado com sucesso!");
+    try {
+      await apiAuthenticated.post("contacts", data);
+      toast.success("O contato foi criado com sucesso!");
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error((error.response?.data as AxiosError).message);
+      } else {
+        console.log(error);
+      }
+    }
   };
 
   const patchContact = async (
     contactId: string,
     data: interfaces.IContactUpdate
   ) => {
-    const response = api.patch(`contacts/${contactId}`, data);
-
-    toast.success("O contato foi atualizado com sucesso!");
+    try {
+      apiAuthenticated.patch(`contacts/${contactId}`, data);
+      toast.success("O contato foi atualizado com sucesso!");
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error((error.response?.data as AxiosError).message);
+      } else {
+        console.log(error);
+      }
+    }
   };
 
   const deleteContact = async (contactId: string) => {
-    const response = await api.delete(`contacts/${contactId}`);
-
-    toast.success("O contato foi deletado com sucesso!");
+    try {
+      await apiAuthenticated.delete(`contacts/${contactId}`);
+      toast.success("O contato foi deletado com sucesso!");
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error((error.response?.data as AxiosError).message);
+      } else {
+        console.log(error);
+      }
+    }
   };
 
   return (

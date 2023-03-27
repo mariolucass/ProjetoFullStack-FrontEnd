@@ -4,7 +4,7 @@ import * as styled from "./styles";
 
 export interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  name: "email" | "name" | "phone" | "password" | "confirm_password";
+  name: "email" | "name" | "phone" | "password" | "confirmPassword";
 
   error: any;
 

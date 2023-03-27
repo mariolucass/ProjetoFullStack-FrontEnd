@@ -1,14 +1,14 @@
 import { z } from "zod";
 
 export const schemaLogin = z.object({
-  email: z.string().email(),
-  password: z.string(),
+  email: z.string().nonempty().email(),
+  password: z.string().nonempty(),
 });
 
 export const schemaRegister = schemaLogin.extend({
-  name: z.string(),
-  email: z.string().email(),
-  phone: z.string(),
-  password: z.string(),
-  confirmPassword: z.string(),
+  name: z.string().nonempty(),
+  email: z.string().nonempty().email(),
+  phone: z.string().nonempty(),
+  password: z.string().nonempty(),
+  confirmPassword: z.string().nonempty(),
 });

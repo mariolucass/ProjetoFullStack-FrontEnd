@@ -1,18 +1,31 @@
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as styled from "./styles";
 import * as components from "../../../../components";
-import { UseAuthContext, UseContactsContext } from "../../../../context";
-import { DialogUpdate } from "./dialog";
+import { UseContactsContext } from "../../../../context";
 import { SelectComponent } from "../../../../components/Selects";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { IContactUpdate } from "../../../interfaces";
+import { IContactUpdate, IContactReturn } from "../../../interfaces";
 import * as schemas from "../../../schemas";
+import { apiAuthenticated } from "../../../database/axios";
+import { toast } from "react-toastify";
 
 export const UpdateContact = () => {
-  const [confirmModal, setConfirmModal] = useState(false);
   const [idToUpdate, setIdToUpdate] = useState("");
-  const { contacts } = UseAuthContext();
+  const [contactsInRender, setContactsInRender] = useState<IContactReturn[]>(
+    [] as IContactReturn[]
+  );
+
+  useEffect(() => {
+    (async () => {
+      const response = await apiAuthenticated.get("/customers/contacts");
+      const data: IContactReturn[] = response.data;
+      console.log(data);
+
+      setContactsInRender(data.filter((contact) => contact.isActive));
+    })();
+  }, []);
+
   const { patchContact } = UseContactsContext();
 
   const {
@@ -20,13 +33,26 @@ export const UpdateContact = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<IContactUpdate>({
-    resolver: zodResolver(schemas.contactCreate),
+    resolver: zodResolver(schemas.contactUpdate),
   });
 
-  const handleOpenModal = () => setConfirmModal(true);
-
   const handleUpdate = async (data: IContactUpdate) => {
-    await patchContact(idToUpdate, data);
+    const nonEmptyValues = Object.entries(data)
+      .filter(([key, value]) => typeof value === "string" && value !== "")
+      .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
+    const dataStrip = schemas.contactUpdate.parse(nonEmptyValues);
+
+    if (idToUpdate === "") {
+      toast.error("Selecione pelo menos um usuário para atualizar");
+      return;
+    }
+
+    if (!Object.keys(dataStrip).length) {
+      toast.error("Selecione pelo menos um campo para atualizar");
+      return;
+    }
+
+    patchContact(idToUpdate, dataStrip);
   };
 
   return (
@@ -36,7 +62,7 @@ export const UpdateContact = () => {
       <styled.DivForm>
         <form onSubmit={handleSubmit(handleUpdate)}>
           <styled.DivButtons>
-            <SelectComponent list={contacts} setState={setIdToUpdate} />
+            <SelectComponent list={contactsInRender} setState={setIdToUpdate} />
           </styled.DivButtons>
 
           <components.Input
@@ -67,18 +93,10 @@ export const UpdateContact = () => {
           />
 
           <styled.DivButtons>
-            <components.Button
-              type={"button"}
-              variant="tertiary"
-              onClick={handleOpenModal}
-            >
-              Atualizar
-            </components.Button>
+            <components.Button type="submit">Atualizar</components.Button>
           </styled.DivButtons>
         </form>
       </styled.DivForm>
-
-      <DialogUpdate state={confirmModal} setState={setConfirmModal} />
     </styled.DivStyled>
   );
 };

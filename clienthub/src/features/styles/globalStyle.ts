@@ -12,6 +12,7 @@ export const GlobalStyle = createGlobalStyle`
 
 
     --tertiary-color: #3596B5;
+    
     --quaternary-color: #ADC5CF;
 
     --white-color: #ffffff;

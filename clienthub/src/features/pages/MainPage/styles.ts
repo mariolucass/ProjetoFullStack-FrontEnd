@@ -5,7 +5,7 @@ export const MainStyled = styled(motion.main)`
   width: 100%;
 
   .css-heg063-MuiTabs-flexContainer {
-    justify-content: space-around;
+    justify-content: space-evenly;
     width: 100%;
   }
 
@@ -14,16 +14,16 @@ export const MainStyled = styled(motion.main)`
   }
 
   @media (min-width: 1440px) {
-    width: 80%;
+    width: 85%;
     height: 70%;
     position: absolute;
-    margin-left: 25%;
+    margin-left: 15%;
     left: 0px;
   }
 `;
 
 export const DivStyled = styled(motion.div)`
-  width: 93.5%;
+  width: 100%;
 
   h1 {
     text-align: center;

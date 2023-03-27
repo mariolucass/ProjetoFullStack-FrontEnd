@@ -1,7 +1,7 @@
 export { Form } from "./Form";
 export { Footer } from "./Footer";
 export { Header } from "./Header";
-export { ListContacts } from "./ListContacts";
+export { Profile } from "./Dashboard/Profile";
 
 export { AllContacts } from "./Dashboard/AllContacts";
 export { CreateContact } from "./Dashboard/CreateContact";

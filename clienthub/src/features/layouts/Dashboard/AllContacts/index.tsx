@@ -1,23 +1,44 @@
 import { Skeleton } from "@mui/material";
-import { UseAuthContext } from "../../../../context";
+import { useEffect, useState } from "react";
+import { apiAuthenticated } from "../../../database/axios";
 import * as styled from "./styles";
+import { IContactReturn } from "../../../interfaces";
 
 export const AllContacts = () => {
-  const { contacts } = UseAuthContext();
+  const [contactsInRender, setContactsInRender] = useState<IContactReturn[]>(
+    [] as IContactReturn[]
+  );
 
-  const renderContacts = contacts.map((elem: any) => {
-    return (
-      <li>
-        <img src={elem.img} alt={elem.name} />
-        <span>{elem.name}</span>
-        <span>{elem.email}</span>
-        <span>{elem.phone}</span>
-      </li>
-    );
-  });
+  useEffect(() => {
+    (async () => {
+      const response = await apiAuthenticated.get("/customers/contacts");
+      const data: IContactReturn[] = response.data;
 
-  const renderList = () => {
-    return contacts.length ? (
+      setContactsInRender(data.filter((contact) => contact.isActive));
+    })();
+  }, []);
+
+  const renderContacts = contactsInRender.map((contact: any) => (
+    <styled.ContactTab key={contact.email}>
+      <div>
+        <h4>Nome:</h4>
+        <span>{contact.name}</span>
+      </div>
+
+      <div>
+        <h4>Email:</h4>
+        <span>{contact.email}</span>
+      </div>
+
+      <div>
+        <h4>Telefone:</h4>
+        <span>{contact.phone}</span>
+      </div>
+    </styled.ContactTab>
+  ));
+
+  const RenderList = () => {
+    return contactsInRender.length ? (
       <styled.ListStyled>{renderContacts}</styled.ListStyled>
     ) : (
       <styled.ListStyled>
@@ -37,7 +58,9 @@ export const AllContacts = () => {
     <styled.DivStyled>
       <h1>Aqui estão todos os seus contatos</h1>
 
-      <styled.DivList>{renderList()}</styled.DivList>
+      <styled.DivList>
+        <RenderList />
+      </styled.DivList>
     </styled.DivStyled>
   );
 };
